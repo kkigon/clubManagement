@@ -97,38 +97,74 @@ function insertSign(cnt) {
 var applicationList = document.getElementById("list-application");
 var passList = document.getElementById("list-pass");
 
+// function studentSort(cnt) {
+//     applicationCnt = 0
+//     passCnt = 0
+//     tmpStudentList = []
+//     applicationList.innerHTML = ''
+//     passList.innerHTML = ''
+//     for (let i in studentList) {
+//         var tmpStudentData = []
+//         if(studentList[i].firstClub.includes(cnt)) {
+//             var index = studentList[i].firstClub.indexOf(cnt);
+//             if (studentList[i].passOrNotFirstClub[index] == "합격") {
+//                 passList.innerHTML += tableContainer(studentList[i],1)
+//                 passCnt += 1
+//             } else {
+//                 applicationList.innerHTML += tableContainer(studentList[i],1)
+//                 applicationCnt += 1
+//             }
+//             tmpStudentData = [studentList[i].number, studentList[i].passOrNotFirstClub[index]]
+//         } else if(studentList[i].secondClub.includes(cnt)) {
+//             if (studentList[i].passOrNotSecondClub[studentList[i].secondClub.indexOf(cnt)] == "합격") {
+//                 passList.innerHTML += tableContainer(studentList[i],2)
+//                 passCnt += 1
+//             } else {
+//                 applicationList.innerHTML += tableContainer(studentList[i],2)
+//                 applicationCnt += 1
+//             }
+//             tmpStudentData = [studentList[i].number, studentList[i].passOrNotSecondClub[index]]
+//         }
+//         tmpStudentList.push(tmpStudentData)
+//     }
+// }
+
 function studentSort(cnt) {
-    applicationCnt = 0
-    passCnt = 0
-    tmpStudentList = []
-    applicationList.innerHTML = ''
-    passList.innerHTML = ''
+    applicationCnt = 0;
+    passCnt = 0;
+    tmpStudentList = [];
+    applicationList.innerHTML = '';
+    passList.innerHTML = '';
+
     for (let i in studentList) {
-        var tmpStudentData = []
-        if(studentList[i].firstClub.includes(cnt)) {
-            var index = studentList[i].firstClub.indexOf(cnt);
-            if (studentList[i].passOrNotFirstClub[index] == "합격") {
-                passList.innerHTML += tableContainer(studentList[i],1)
-                passCnt += 1
-            } else {
-                applicationList.innerHTML += tableContainer(studentList[i],1)
-                applicationCnt += 1
+        try {
+            var tmpStudentData = [];
+            if (studentList[i].firstClub.includes(cnt)) {
+                var index = studentList[i].firstClub.indexOf(cnt);
+                if (studentList[i].passOrNotFirstClub[index] == "합격") {
+                    passList.innerHTML += tableContainer(studentList[i], 1);
+                    passCnt += 1;
+                } else {
+                    applicationList.innerHTML += tableContainer(studentList[i], 1);
+                    applicationCnt += 1;
+                }
+                tmpStudentData = [studentList[i].number, studentList[i].passOrNotFirstClub[index]];
+            } else if (studentList[i].secondClub.includes(cnt)) {
+                if (studentList[i].passOrNotSecondClub[studentList[i].secondClub.indexOf(cnt)] == "합격") {
+                    passList.innerHTML += tableContainer(studentList[i], 2);
+                    passCnt += 1;
+                } else {
+                    applicationList.innerHTML += tableContainer(studentList[i], 2);
+                    applicationCnt += 1;
+                }
+                tmpStudentData = [studentList[i].number, studentList[i].passOrNotSecondClub[index]];
             }
-            tmpStudentData = [studentList[i].number, studentList[i].passOrNotFirstClub[index]]
-        } else if(studentList[i].secondClub.includes(cnt)) {
-            if (studentList[i].passOrNotSecondClub[studentList[i].secondClub.indexOf(cnt)] == "합격") {
-                passList.innerHTML += tableContainer(studentList[i],2)
-                passCnt += 1
-            } else {
-                applicationList.innerHTML += tableContainer(studentList[i],2)
-                applicationCnt += 1
-            }
-            tmpStudentData = [studentList[i].number, studentList[i].passOrNotSecondClub[index]]
+            tmpStudentList.push(tmpStudentData);
+        } catch (error) {
+            console.error(`Error in iteration for i=${i}:`, error);
         }
-        tmpStudentList.push(tmpStudentData)
     }
 }
-
 
 function numberCount() {
     var applicationStudentNumber = document.getElementById("countApplicationStudent");
