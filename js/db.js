@@ -3,6 +3,8 @@ var url;
 var clubNumber = 1;
 var studentList;
 
+// HACK: safely get data['none']
+const sampleDatum = {name: '-', group: 0, subject: null, intro: ''};
 
 function loadClubList(){
     url = 'https://script.google.com/macros/s/AKfycbz48SfrCNoyzAC2Y4cassb96sI35bHVK6wXZ12gB4x9yr6JPzBeerH7Tj_DONO6js4ziQ/exec'
@@ -137,6 +139,11 @@ function numberCount() {
     passStudentNumber.innerHTML = `(${passCnt}명)`
 }
 
+const getSafeData = (index) => {
+    if (index in data) return data[index];
+    else return sampleDatum;
+}
+
 function tableContainer(student,cnt) {
     var passOrNot
     if (cnt == 1) {
@@ -157,8 +164,8 @@ function tableContainer(student,cnt) {
     `<tr id = "${student.number}">
         <td>${student.number}</td>
         <td>${student.name}</td>
-        <td><div>${cnt == 1 ? data[student.firstClub[0]].name : data[student.secondClub[0]].name}<div class="${cnt == 1 ? student.firstClub[0] : student.secondClub[0]}" style="width:10px;height:10px;border-radius:100%;background-color:var(--${passOrNot[0]}-color);margin:0 0 0 5px;"></div></div></td>
-        <td><div>${cnt == 1 ? data[student.firstClub[1]].name : data[student.secondClub[1]].name}<div class="${cnt == 1 ? student.firstClub[1] : student.secondClub[1]}" style="width:10px;height:10px;border-radius:100%;background-color:var(--${passOrNot[1]}-color);margin:0 0 0 5px;"></div></div></td>
+        <td><div>${cnt == 1 ? getSafeData(student.firstClub[0]).name : getSafeData(student.secondClub[0]).name}<div class="${cnt == 1 ? student.firstClub[0] : student.secondClub[0]}" style="width:10px;height:10px;border-radius:100%;background-color:var(--${passOrNot[0]}-color);margin:0 0 0 5px;"></div></div></td>
+        <td><div>${cnt == 1 ? getSafeData(student.firstClub[1]).name : getSafeData(student.secondClub[1]).name}<div class="${cnt == 1 ? student.firstClub[1] : student.secondClub[1]}" style="width:10px;height:10px;border-radius:100%;background-color:var(--${passOrNot[1]}-color);margin:0 0 0 5px;"></div></div></td>
         <td><a href="javascript:void(0);" onclick="transStudentPassOrFail(${student.number});"><img src="./img/baseline_swap_horiz_black_24dp.png" width="30px"></a></td>
     </tr>`
     return container
