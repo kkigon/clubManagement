@@ -72,14 +72,25 @@ var applicationCnt = 0;
 var passCnt = 0;
 var tmpStudentList = [];
 
-async function moveY(cnt) {
-    var clubExplain = document.getElementById("clubExplain");
-    clubExplain.style.transform = `translateY(-${cnt*540}px)`;
-    insertSign(cnt);
 
-    await studentSort(cnt);
-    numberCount()
+async function moveY(cnt) {
+    const clubName = data[cnt].name;
+    const password = ((cnt + 3) ** 10).toString().slice(0, 4);
+
+    var userPassword = prompt(`Enter the password for ${clubName}:`);
+    if (userPassword !== password) {
+        alert("Incorrect password. Access denied.");
+        return;
+    } else {
+        var clubExplain = document.getElementById("clubExplain");
+        clubExplain.style.transform = `translateY(-${cnt * 540}px)`;
+        insertSign(cnt);
+
+        await studentSort(cnt);
+        numberCount();
+    }
 }
+
 
 function insertSign(cnt) {
     var appliForm = document.getElementById("application");
