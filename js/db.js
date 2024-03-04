@@ -75,7 +75,8 @@ var tmpStudentList = [];
 
 async function moveY(cnt) {
     const clubName = data[cnt].name;
-    const password = ((cnt + 3) ** 10).toString().slice(0, 4);
+    //const password = ((cnt + 3) ** 10).toString().slice(0, 4);
+    const password = '1234'
 
     var userPassword = prompt(`Enter the password for ${clubName}:`);
     if (userPassword !== password) {
